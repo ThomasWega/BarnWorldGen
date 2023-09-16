@@ -1,6 +1,7 @@
 package com.bof.barn.world_generator.generation;
 
 import com.bof.barn.world_generator.WorldGenerator;
+import com.bof.barn.world_generator.data.SchematicsStorage;
 import com.fastasyncworldedit.core.FaweAPI;
 import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.WorldEdit;
@@ -11,10 +12,13 @@ import com.sk89q.worldedit.extent.clipboard.io.ClipboardReader;
 import com.sk89q.worldedit.function.operation.Operation;
 import com.sk89q.worldedit.function.operation.Operations;
 import com.sk89q.worldedit.math.BlockVector3;
+import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldedit.session.ClipboardHolder;
+import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.util.BoundingBox;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -23,15 +27,12 @@ import java.io.IOException;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
+@RequiredArgsConstructor
 public class SchematicGenerator {
-
+    @NotNull
     private final WorldGenerator plugin;
+    @NotNull
     private final File schematicFile;
-
-    public SchematicGenerator(@NotNull WorldGenerator plugin, @NotNull File schematicFile) {
-        this.plugin = plugin;
-        this.schematicFile = schematicFile;
-    }
 
     public CompletableFuture<Void> loadGrid(@NotNull Set<Location> gridLocations) {
         Clipboard clipboard = getSchematicClipboard();
@@ -61,12 +62,23 @@ public class SchematicGenerator {
                     .build()
             ) {
                 gridLocations.forEach(location -> {
+                    BlockVector3 loc = BlockVector3.at(location.getX(), location.getY(), location.getZ());
+
+                    CuboidRegion box = schematic.getRegion().clone().getBoundingBox();
+                    box.shift(loc);
+                    SchematicsStorage.getPastedRegions().add(
+                            BoundingBox.of(
+                                    world.getBlockAt(box.getPos1().getX(), box.getPos1().getY(), box.getPos1().getZ()),
+                                    world.getBlockAt(box.getPos2().getX(), box.getPos2().getY(), box.getPos2().getZ())
+                            )
+                    );
+
                     Operation operation = new ClipboardHolder(schematic)
                             .createPaste(editSession)
                             .ignoreAirBlocks(true)
                             .copyBiomes(true)
                             .copyEntities(false)
-                            .to(BlockVector3.at(location.getX(), location.getY(), location.getZ()))
+                            .to(loc)
                             .build();
                     Operations.complete(operation);
                 });

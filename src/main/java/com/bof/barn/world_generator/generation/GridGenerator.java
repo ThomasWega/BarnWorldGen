@@ -1,18 +1,15 @@
 package com.bof.barn.world_generator.generation;
 
+import lombok.RequiredArgsConstructor;
 import org.bukkit.Location;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@RequiredArgsConstructor
 public class GridGenerator {
     private final int gridSize;
     private final int gridSpacing;
-
-    public GridGenerator(int gridSize, int gridSpacing) {
-        this.gridSize = gridSize;
-        this.gridSpacing = gridSpacing;
-    }
 
     public Set<Location> generateGrid(Location startLocation) {
         Set<Location> pasteLocations = new HashSet<>();

@@ -7,5 +7,5 @@ grid:
   # size of the grid (e.g. 3 = 3x3 barns)
   size: 2
 
-  # how for from the schematic center should a new schematic in every direction be placed
+  # how for from the schematic should a new schematic in every direction be placed
   spacing: 250

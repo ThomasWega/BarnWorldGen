@@ -10,6 +10,6 @@ public class PlayerJoinOnLockListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void onPlayerJoin(AsyncPlayerPreLoginEvent event) {
-        event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, Component.text("The server loading..."));
+        event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, Component.text("TO ADD - The server loading..."));
     }
 }
