@@ -1,0 +1,11 @@
+name: BoFBarnWorldGenerator
+version: '${version}'
+main: com.bof.barn.world_generator.WorldGenerator
+api-version: '1.20'
+load: STARTUP
+dependencies:
+  server:
+    FastAsyncWorldEdit:
+      load: BEFORE
+      required: true
+      join-classpath: true

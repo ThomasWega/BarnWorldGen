@@ -1,0 +1,11 @@
+schematic:
+  # the location of schematic inside /plugins/BoFBarnWorldGenerator
+  # new 1.13+ schematic format is .schem. Please prefer that one to prevent issues
+  path: "barn.schem"
+
+grid:
+  # size of the grid (e.g. 3 = 3x3 barns)
+  size: 2
+
+  # how for from the schematic center should a new schematic in every direction be placed
+  spacing: 250
