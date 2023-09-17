@@ -12,7 +12,6 @@ import com.sk89q.worldedit.extent.clipboard.io.ClipboardReader;
 import com.sk89q.worldedit.function.operation.Operation;
 import com.sk89q.worldedit.function.operation.Operations;
 import com.sk89q.worldedit.math.BlockVector3;
-import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldedit.session.ClipboardHolder;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
@@ -62,16 +61,26 @@ public class SchematicGenerator {
                     .build()
             ) {
                 gridLocations.forEach(location -> {
+                    // Get the dimensions of the clipboard
+                    BlockVector3 dimensions = schematic.getDimensions();
+
                     BlockVector3 loc = BlockVector3.at(location.getX(), location.getY(), location.getZ());
 
-                    CuboidRegion box = schematic.getRegion().clone().getBoundingBox();
-                    box.shift(loc);
-                    SchematicsStorage.getPastedRegions().add(
-                            BoundingBox.of(
-                                    world.getBlockAt(box.getPos1().getX(), box.getPos1().getY(), box.getPos1().getZ()),
-                                    world.getBlockAt(box.getPos2().getX(), box.getPos2().getY(), box.getPos2().getZ())
-                            )
+                    // Calculate the bounding box of the pasted schematic
+                    BoundingBox boundingBox = new BoundingBox(
+                            loc.getX() - 1,
+                            loc.getY(),
+                            loc.getZ(),
+                            loc.getX() + dimensions.getX() + 1,
+                            loc.getY() + dimensions.getY(),
+                            loc.getZ() - dimensions.getZ()
                     );
+
+                    // Do something with the bounding box, e.g., store it in a data structure
+                    SchematicsStorage.getPastedRegions().add(boundingBox);
+
+                    // Do something with the bounding box, e.g., store it in a data structure
+                    SchematicsStorage.getPastedRegions().add(boundingBox);
 
                     Operation operation = new ClipboardHolder(schematic)
                             .createPaste(editSession)
