@@ -2,7 +2,7 @@ package com.bof.barn.world_generator;
 
 import com.bof.barn.world_generator.generation.EmptyChunkGenerator;
 import com.bof.barn.world_generator.generation.WorldGeneratorHandler;
-import com.bof.toolkit.FileLoader;
+import com.bof.toolkit.file.FileLoader;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.java.JavaPlugin;
