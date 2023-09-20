@@ -35,7 +35,9 @@ public class WorldGeneratorHandler {
         }
 
         new SchematicGenerator(plugin, new File(plugin.getDataFolder(), schematicName))
-                .loadGrid(new GridGenerator(gridSize, gridSpacing).generateGrid(world.getSpawnLocation()))
+                .loadGrid(new GridGenerator(gridSize, gridSpacing)
+                        .generateGrid(world.getSpawnLocation())
+                )
                 .thenRun(() -> {
                     // needs to run sync!
                     Bukkit.getScheduler().runTask(plugin, () -> {

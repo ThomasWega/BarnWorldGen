@@ -30,6 +30,7 @@ dependencies {
 
 tasks {
     assemble {
+        dependsOn(shadowJar)
         dependsOn(reobfJar)
     }
 
