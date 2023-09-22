@@ -1,10 +1,11 @@
 package com.bof.barn.world_generator.generation;
 
 import com.bof.barn.world_generator.WorldGenerator;
-import com.bof.barn.world_generator.events.GridLoadedEvent;
+import com.bof.barn.world_generator.event.GridLoadedEvent;
 import com.bof.barn.world_generator.listener.PlayerJoinOnLockListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
+import org.bukkit.GameRule;
 import org.bukkit.World;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 
@@ -34,6 +35,8 @@ public class WorldGeneratorHandler {
             throw new RuntimeException("Couldn't find world named \"world\". Please make sure the default world wasn't renamed or set to a different one in server.properties");
         }
 
+        this.setWorldPresets(world);
+
         new SchematicGenerator(plugin, new File(plugin.getDataFolder(), schematicName))
                 .loadGrid(new GridGenerator(gridSize, gridSpacing)
                         .generateGrid(world.getSpawnLocation())
@@ -46,6 +49,12 @@ public class WorldGeneratorHandler {
                         unLockServer();
                     });
                 });
+    }
+
+    private void setWorldPresets(World world) {
+        world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
+        world.setGameRule(GameRule.DO_WEATHER_CYCLE, false);
+        world.setGameRule(GameRule.DO_MOB_SPAWNING, false);
     }
 
     private void unloadChunks(World world) {
