@@ -3,10 +3,7 @@ package com.bof.barn.world_generator.generation;
 import com.bof.barn.world_generator.WorldGenerator;
 import com.bof.barn.world_generator.event.GridLoadedEvent;
 import com.bof.barn.world_generator.listener.PlayerJoinOnLockListener;
-import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
-import org.bukkit.GameRule;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 
 import java.io.File;
@@ -52,6 +49,7 @@ public class WorldGeneratorHandler {
     }
 
     private void setWorldPresets(World world) {
+        world.setDifficulty(Difficulty.PEACEFUL);
         world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
         world.setGameRule(GameRule.DO_WEATHER_CYCLE, false);
         world.setGameRule(GameRule.DO_MOB_SPAWNING, false);
