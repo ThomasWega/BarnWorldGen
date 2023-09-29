@@ -6,6 +6,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 
+/**
+ * Cancel the player join when the world generation is happening
+ */
 public class PlayerJoinOnLockListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)

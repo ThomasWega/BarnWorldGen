@@ -11,6 +11,12 @@ public class GridGenerator {
     private final int gridSize;
     private final int gridSpacing;
 
+    /**
+     * Calculate the grid locations
+     *
+     * @param startLocation Location where the first schematic will be pasted at
+     * @return Locations of every schematic in the grid
+     */
     public Set<Location> generateGrid(Location startLocation) {
         Set<Location> pasteLocations = new HashSet<>();
         for (int x = 0; x < gridSize; x++) {

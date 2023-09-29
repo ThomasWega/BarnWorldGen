@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 
 public final class WorldGenerator extends JavaPlugin {
-    
+
     public static ComponentLogger LOGGER;
 
     @Override

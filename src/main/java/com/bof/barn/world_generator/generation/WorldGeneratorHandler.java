@@ -20,6 +20,13 @@ public class WorldGeneratorHandler {
         this.lockListener = new PlayerJoinOnLockListener();
     }
 
+    /**
+     * Create a grid from the schematic and load it. Also set presets for the world,
+     *
+     * @param schematicName Name of the schematic file
+     * @param gridSize      Size the grid will have (e.g. 3 = 3x3 grid)
+     * @param gridSpacing   Space between each schematic
+     */
     public void initiate(String schematicName, int gridSize, int gridSpacing) {
         lockServer();
 

@@ -53,6 +53,7 @@ public class SchematicGenerator {
         World world = gridLocations.toArray(Location[]::new)[0].getWorld();
 
         CompletableFuture<Void> future = new CompletableFuture<>();
+        // paste the schematics async
         Bukkit.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
             try (EditSession editSession = WorldEdit.getInstance().newEditSessionBuilder()
                     .world(FaweAPI.getWorld(world.getName()))
