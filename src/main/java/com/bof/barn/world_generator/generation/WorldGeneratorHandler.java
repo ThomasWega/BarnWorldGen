@@ -3,13 +3,17 @@ package com.bof.barn.world_generator.generation;
 import com.bof.barn.world_generator.WorldGenerator;
 import com.bof.barn.world_generator.event.GridLoadedEvent;
 import com.bof.barn.world_generator.listener.PlayerJoinOnLockListener;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
+import org.bukkit.Difficulty;
+import org.bukkit.GameRule;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 
 import java.io.File;
 import java.util.Arrays;
 
 import static com.bof.barn.world_generator.WorldGenerator.LOGGER;
+import static com.bof.barn.world_generator.WorldGenerator.WORLD;
 
 public class WorldGeneratorHandler {
     private final WorldGenerator plugin;
@@ -34,39 +38,34 @@ public class WorldGeneratorHandler {
 
         long time = System.currentTimeMillis();
 
-        World world = Bukkit.getWorld("world");
-        if (world == null) {
-            throw new RuntimeException("Couldn't find world named \"world\". Please make sure the default world wasn't renamed or set to a different one in server.properties");
-        }
-
-        this.setWorldPresets(world);
+        this.setWorldPresets();
 
         new SchematicGenerator(plugin, new File(plugin.getDataFolder(), schematicName))
                 .loadGrid(new GridGenerator(gridSize, gridSpacing)
-                        .generateGrid(world.getSpawnLocation())
+                        .generateGrid(WORLD.getSpawnLocation())
                 )
                 .thenRun(() -> {
                     // needs to run sync!
                     Bukkit.getScheduler().runTask(plugin, () -> {
                         LOGGER.warn("Pasting of grid took finished ({} ms)", System.currentTimeMillis() - time);
-                        unloadChunks(world);
+                        unloadChunks();
                         unLockServer();
                     });
                 });
     }
 
-    private void setWorldPresets(World world) {
-        world.setDifficulty(Difficulty.PEACEFUL);
-        world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
-        world.setGameRule(GameRule.DO_WEATHER_CYCLE, false);
-        world.setGameRule(GameRule.DO_MOB_SPAWNING, false);
-        world.setTime(6000);
+    private void setWorldPresets() {
+        WORLD.setDifficulty(Difficulty.PEACEFUL);
+        WORLD.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
+        WORLD.setGameRule(GameRule.DO_WEATHER_CYCLE, false);
+        WORLD.setGameRule(GameRule.DO_MOB_SPAWNING, false);
+        WORLD.setTime(6000);
     }
 
-    private void unloadChunks(World world) {
+    private void unloadChunks() {
         long time2 = System.currentTimeMillis();
         LOGGER.warn("Unloading all chunks...");
-        Arrays.stream(world.getLoadedChunks()).forEach(Chunk::unload);
+        Arrays.stream(WORLD.getLoadedChunks()).forEach(Chunk::unload);
         LOGGER.warn("All chunks have been unloaded ({} ms)", System.currentTimeMillis() - time2);
 
     }
