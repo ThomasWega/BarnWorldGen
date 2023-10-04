@@ -11,20 +11,24 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public final class WorldGenerator extends JavaPlugin {
     public static ComponentLogger LOGGER;
     @SuppressWarnings("DataFlowIssue")
     @NotNull
-    public static final World WORLD = Bukkit.getWorld("world");
+    public static World WORLD = null;
 
     @Override
     public void onEnable() {
         LOGGER = getComponentLogger();
         loadFiles();
         // schedule this so it runs only after world is loaded
-        getServer().getScheduler().scheduleSyncDelayedTask(this, () -> new WorldGeneratorHandler(this)
-                .initiate(getConfig().getString("schematic.path"), getConfig().getInt("grid.size"), getConfig().getInt("grid.spacing")));
+        getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
+            WORLD = Objects.requireNonNull(Bukkit.getWorld("world"), "The world needs to be named \"world\"");
+            new WorldGeneratorHandler(this)
+                    .initiate(getConfig().getString("schematic.path"), getConfig().getInt("grid.size"), getConfig().getInt("grid.spacing"));
+        });
     }
 
     @Override
