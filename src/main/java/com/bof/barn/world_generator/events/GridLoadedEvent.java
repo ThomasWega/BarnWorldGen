@@ -1,4 +1,4 @@
-package com.bof.barn.world_generator.event;
+package com.bof.barn.world_generator.events;
 
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;

@@ -1,8 +1,8 @@
 package com.bof.barn.world_generator.generation;
 
 import com.bof.barn.world_generator.WorldGenerator;
-import com.bof.barn.world_generator.event.GridLoadedEvent;
-import com.bof.barn.world_generator.listener.PlayerJoinOnLockListener;
+import com.bof.barn.world_generator.events.GridLoadedEvent;
+import com.bof.barn.world_generator.listeners.PlayerJoinOnLockListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Difficulty;

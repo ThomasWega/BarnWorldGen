@@ -1,4 +1,4 @@
-package com.bof.barn.world_generator.listener;
+package com.bof.barn.world_generator.listeners;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.event.EventHandler;
